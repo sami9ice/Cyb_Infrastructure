@@ -1,0 +1,71 @@
+﻿@model CYBInfrastructure.Web.Models.UnitViewModel
+
+@{
+    ViewBag.Title = "Create Unit";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Add Unit</h2>
+
+@using (Html.BeginForm()) 
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <div class="form-group">
+        <label class="control-label col-md-6"> Unit Name</label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.UnitName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UnitName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2"> Date </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-6"> Department</label>
+        <div class="col-md-3">
+            <select name="DepartmentId" class="form-control">
+                <option>Select Department</option>
+                @foreach (var item in Model.Departments)
+                {
+                    <option id="@item.Id" value="@item.Id">@item.DepartmentName</option>
+                }
+            </select>
+            @*@Html.ValidationMessageFor(model => model.Departments, "", new { @class = "text-danger" })*@
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-6"> Location Name</label>
+        <div class="col-md-3">
+            <select name="LocationId" class="form-control">
+                <option>Select Location</option>
+                @foreach (var item in Model.Locations)
+                {
+                    <option id="@item.Id" value="@item.Id">@item.LocationName</option>
+                }
+            </select>
+
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Create" class="btn btn-primary" onclick="return confirm('Are you sure you  to Add?')" />
+        </div>
+    </div>
+</div>
+    }
+
+    <div>
+        @Html.ActionLink("Back to List", "Index")
+    </div>

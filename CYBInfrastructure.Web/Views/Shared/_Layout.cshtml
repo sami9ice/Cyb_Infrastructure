@@ -1,0 +1,71 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+  
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+
+    
+
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+            <div class="container">
+                <div class="navbar-left">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @Html.ActionLink("Location", "Index", "Location", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Department", "Index", "Department", new { area = "" }, new { @class = "navbar-brand" })
+                    @Html.ActionLink("Unit", "Index", "Unit", new { area = "" }, new { @class = "navbar-brand" })
+
+
+                </div>
+            </div>
+        </div>*@
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @RenderSection("scripts", required: false)
+
+
+
+    <div class="container body-content">
+        @RenderBody()
+
+
+
+        <!-- end page title -->
+        @*<hr />*@
+
+        @*<footer class="footer">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-6">
+                            Simulor Admin &copy; 2018 - Coderthemes.com
+                        </div>
+                        <div class="col-md-6">
+                            <div class="text-md-right footer-links d-none d-sm-block">
+                                <a href="#">About Us</a>
+                                <a href="#">Help</a>
+                                <a href="#">Contact Us</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>*@
+        @*<p>&copy; @DateTime.Now.Year - My CYB Infrastructure Application</p>*@
+
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @*@RenderSection("scripts", required: false)*@
+    @RenderSection("MyScripts", required: false)
+
+
+</body>
+</html>

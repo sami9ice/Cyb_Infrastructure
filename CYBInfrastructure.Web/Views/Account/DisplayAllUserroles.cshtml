@@ -1,0 +1,28 @@
+﻿@model CYBInfrastructure.Web.Model.AllroleandUser
+@using GridMvc.Html
+
+
+@{
+    ViewBag.Title = "DisplayAllUserroles";
+}
+
+<h2>DisplayAllUserroles</h2>
+<link href="~/Content/Gridmvc.css" rel="stylesheet" />
+
+@*<link href="~/bootstrap/css/bootstrap.min.css" rel="stylesheet" />*@
+<link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+
+@*<script src="~/Scripts/jquery-1.9.1.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+<script src="~/Scripts/gridmvc.js"></script>
+
+@Html.Grid(Model.AllDetailsUserlist).Columns(columns =>
+
+{
+
+columns.Add(c => c.UserName).Titled("UserName").Filterable(true);
+
+columns.Add(c => c.RoleName).Titled("RoleName").Filterable(true);
+
+}).WithPaging(10).Sortable(true)
+

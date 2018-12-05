@@ -1,0 +1,204 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.Inventory
+@{
+                /**/
+
+                ViewBag.Title = "Edit Virtual Machine";
+                Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Edit Virtual Machine</h2>
+
+@using (Html.BeginForm("Edit", "VirtualMachine", FormMethod.Post, new { onsubmit = "return SubmitForm(this)" }))
+{
+    <hr />
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <p></p>
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Sever Name</label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ServerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServerName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <p></p>
+        @*<div class="form-group">
+            @Html.LabelFor(model => model.HostName, "Host Name", htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.HostName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.HostName, "", new { @class = "text-danger" })
+            </div>*@
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-6"> Primary IP</label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.PrimaryIP, "Primary IP", new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.PrimaryIP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.SecondaryIP, "Secondary IP", htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextAreaFor(e => e.SecondaryIP, 3, 50, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.SecondaryIP, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2"> Date </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-6"> Description</label>
+
+        <div class="col-md-3">
+            @Html.TextAreaFor(e => e.Description, 5, 50, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.VLAN, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.VLAN, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.VLAN, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.Gateway, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Gateway, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Gateway, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Location</label>
+
+        <div class="col-md-3">
+            <select name="LocationId" class="form-control">
+                <option>Select Location</option>
+                @foreach (var item in ViewBag.locations)
+                {
+                    <option id="@item.Id" @(item.Id == Model.LocationId ? "selected" : "") value="@item.Id">@item.LocationName</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Unit</label>
+
+        <div class="col-md-3">
+            <select name="UnitId" class="form-control">
+                <option>Select Location</option>
+                @foreach (var item in ViewBag.units)
+                {
+                    <option id="@item.Id" @(item.Id == Model.UnitId ? "selected" : "") value="@item.Id">@item.UnitName</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-6"> Environment</label>
+        <div class="col-md-3">
+            @Html.EnumDropDownListFor(model => model.Environment, htmlAttributes: new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.Environment, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            <label class="control-label col-md-6"> Host</label>
+            <div class="col-md-3">
+                @Html.EnumDropDownListFor(model => model.Host, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Host, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Host</label>
+
+        <div class="col-md-3">
+            <select name="UnitId" class="form-control">
+                <option>Select Location</option>
+                @foreach (var item in ViewBag.hosts)
+                {
+                    <option id="@item.id" @(item.id == Model.HostId ? "selected" : "") value="@item.id">@item.HostName</option>
+                }
+            </select>
+
+        </div>
+    </div>
+
+
+    @*<div class="form-group">
+            <label class="control-label col-md-6"> Host </label>
+            <div class="col-md-3">
+                <select name="HostID" class="form-control">
+                    <option>Select Host</option>
+                    @foreach (var item in ViewBag.hosts)
+                    {
+                        <option id="@item.id" value="@item.id">@item.HostName</option>
+                    }
+                </select>
+
+            </div>
+        </div>*@
+
+    @*<div class="form-group">
+            <label class="control-label col-md-6"> Server Type</label>
+            <div class="col-md-3">
+                @Html.EnumDropDownListFor(model => model.ServerType, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ServerType, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+    <p></p>
+
+    <div class="form-group">
+        <div class=" col-md-6">
+            <input type="submit" value="Save" class="btn btn-primary" onclick="return confirm('Do you want to save the data')" />
+        </div>
+    </div>
+    @*</div>*@
+
+
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+@*<script src="/template/web/js/jquery-2.2.3.min.js"></script>*@
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script src="~/scripts/toastr.js"></script>
+<script>
+                        $(function () {
+                            var a = '@TempData["Success"]';
+                            if (a != '')
+                                toastr.error("", a);
+                            //alert("ab" + a)
+                            window.location = '#2249506';
+                        })
+</script>

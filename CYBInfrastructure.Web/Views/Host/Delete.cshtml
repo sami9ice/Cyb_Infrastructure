@@ -1,0 +1,92 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.Host
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Host</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.HostName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.HostName, "Host Name")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IpAddress)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IpAddress, "IP Address")
+
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CPU)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CPU, "CPU")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RAM)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RAM, "RAM")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DiskSpace)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DiskSpace, "Disk Space")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OperatingSystem)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OperatingSystem, "Operating System")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hypervisor)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hypervisor)
+        </dd>
+
+    </dl>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-primary" onclick="return confirm('Are you Sure You Want to Delete This ?')" /> |
+                    @Html.ActionLink("Back to List", "Index")
+                </div>
+            }
+
+
+        </div>

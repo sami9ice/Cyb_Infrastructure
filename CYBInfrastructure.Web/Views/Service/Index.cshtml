@@ -1,0 +1,103 @@
+﻿@model CYBInfrastructure.Web.Models.ServiceListViewModel
+@{
+    ViewBag.Title = "List Of Services";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Service</h4>
+                <p class="text-muted font-13 mb-4">
+                    List of Services
+                </p>
+                <p class="text-muted font-13 mb-4">
+                    <a class="btn btn-primary" style=" margin-bottom:10px" href="/Service/Create"><i class="fa fa-plus"></i> Add New</a>
+
+
+                </p>
+                <p  class="col-md-offset-0">
+                    @Html.ActionLink("Export To Excel", "Export", "Service", new { @class = "btn btn-success" }) 
+                    @*@Html.ActionLink("Export to Pdf", "Pdf", "Service", new { @class = "btn btn-primary" })*@
+                </p>
+
+                <table id="basic-datatable" class="table dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Service </th>
+                            <th>Date Created</th>
+                            <th>Description</th>
+                            <th>Port Number</th>
+                            <th>Url</th>
+                            <th>IsActive</th>
+                            <th>Server Name</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.Services)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Description)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Port)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.URL)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Inventory.ServerName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" })*@
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                            </td>
+
+                        </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script src="~/scripts/toastr.js"></script>
+<script>
+                        $(function () {
+                            var a = '@TempData["Success"]';
+                            if (a != '')
+                                toastr.success("", a);
+                            ({
+                               "displayTime": 4000,
+                                 "message": "Toast ",
+                                 "visible": true
+                            });
+                            //alert("ab" + a)
+                            window.location = '#2249506';
+                        })
+</script>
+

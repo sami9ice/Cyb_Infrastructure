@@ -1,0 +1,49 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.Services
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Details Of Service</h2>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name,"Service Name")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Inventory)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Inventories)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-success" })
+</p>
+

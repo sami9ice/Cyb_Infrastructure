@@ -1,0 +1,58 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.Location
+
+@{
+    ViewBag.Title = "Edit Location";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";}
+
+<h2>Edit Location</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        <label class="control-label col-md-2">Location Name</label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.LocationName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.LocationName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-md-2"> Date </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-6">
+            @Html.TextAreaFor(e => e.Description, 5, 50, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-6">
+                @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" id="alert-target" class="btn btn-primary" onclick="return confirm('Do you want to save the data ?')" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

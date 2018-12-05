@@ -1,0 +1,105 @@
+﻿@model CYBInfrastructure.Web.Models.DepartmentListViewModel
+@*<a class="btn btn-success" style=" margin-bottom:10px" href="Create"><i class="fa fa-plus"></i> Add New</a>*@
+
+@{
+    ViewBag.Title = "Department Manager";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="header-title">Department</h4>
+                <p class="text-muted font-13 mb-4">
+                    List of Department
+                </p>
+                <p class="text-muted font-13 mb-4">
+                    <a class="btn btn-primary" style=" margin-bottom:10px" href="/Department/Create"><i class="fa fa-plus"></i> Add New</a>
+
+                </p>
+
+                <p>
+                    @Html.ActionLink("Export To Excel", "Export", "Department", new { @class = "btn btn-success" }) 
+                    @*@Html.ActionLink("Export to Pdf", "Pdf", "Department", new { @class = "btn btn-success" })*@
+                </p>
+
+
+                <table id="basic-datatable" class="table dt-responsive nowrap">
+                    <thead>
+                        <tr>
+                            <th>Name of Department</th>
+                            <th>Date</th>
+                            <th>IsActive</th>
+                            <th>Location Name</th>
+                            <th>Action</th>
+
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.departments)
+                        {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.DepartmentName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Date)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Location.LocationName)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary" })
+                                @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success" })*@
+                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger" })
+                            </td>
+
+                        </tr>
+
+
+                        }
+
+
+
+                    </tbody>
+                </table>
+            </div> <!-- end card body-->
+        </div> <!-- end card -->
+    </div><!-- end col-->
+</div>
+
+<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+
+<script src="~/scripts/toastr.js"></script>
+<script>
+                        $(function () {
+                            var a = '@TempData["Success"]';
+                            if (a != '')
+                                toastr.success("", a);
+                            ({
+                               "displayTime": 4000,
+                                 "message": "Toast ",
+                                 "visible": true
+                            });
+                            //alert("ab" + a)
+                            window.location = '#2249506';
+                        })
+</script>
+
+
+
+<!-- end row-->
+@*<script type="text/javascript">
+        $(document).ready(function () {
+            @if (ViewBag.Success == true) {
+                @:toastr.success("@ViewBag.Message");
+            } else if (ViewBag.Success == false) {
+                @:toastr.error("@ViewBag.Message");
+            }
+        });
+    </script>*@

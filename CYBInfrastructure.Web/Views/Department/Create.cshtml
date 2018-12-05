@@ -1,0 +1,99 @@
+﻿
+@model CYBInfrastructure.Web.Models.DepartmentViewModel
+
+@{
+    /**/
+
+    ViewBag.Title = "Create Department";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+<h1>Add Department</h1>
+@using (Html.BeginForm("Create", "Department", FormMethod.Post, new { onsubmit = "return SubmitForm(t  his)" }))
+{
+<div>
+    <hr />
+    @Html.HiddenFor(model => model.Id)
+    <div class="form-group">
+        <label class="control-label col-md-0"> Department Name</label>
+
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.DepartmentName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.DepartmentName, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+    <p></p>
+    <div class="form-group">
+        <label class="control-label col-md-0"> Date</label>
+
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+            @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+
+        </div>
+    </div>
+
+
+
+
+    <div class="form-group">
+        <label class="control-label col-md-0"> Location Name</label>
+        <div class="col-md-3">
+            <select name="LocationId" class="form-control">
+                <option>Select Location</option>
+                @foreach (var item in Model.Locations)
+                {
+                    <option id="@item.Id" value="@item.Id">@item.LocationName</option>
+
+                }
+            </select>
+
+        </div>
+    </div>
+
+    @*<div class="form-group">
+            <label class="control-label col-md-6"> Is Active?</label>
+            <div class="col-md-1">
+                @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <label class=" col-md-0"> Is Active?</label>
+        @Html.EditorFor(model => model.IsActive, new { htmlAttributes = new { @*@class = "form-control"*@@class = "  control-label col-md-offset-12"
+    }
+})
+        @Html.ValidationMessageFor(model => model.IsActive, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-0">
+
+            <input id="btn-1" type="submit" value="submit" class="btn btn-primary" onclick="return confirm('Are you sure you want Add?')" />
+        </div>
+    </div>
+</div>
+}
+<div class="col-md-0">
+
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+                         @*<script src="~/Scripts/jquery-3.3.1.min.js"></script>
+                          <script type="text/javascript">
+                           $(document).ready(function () {
+                           @if (ViewBag.Success == true) {
+                           @:toastr.success("@ViewBag.Message");
+                           } else if (ViewBag.Success == false) {
+                           @:toastr.error("@ViewBag.Message");
+                            }
+                           });
+                            </script>*@
+                     
+@*<script>
+        $("#btn-1").click(function (){
+            toastr.error("fatal error", "fatal");
+        })
+    </script>*@

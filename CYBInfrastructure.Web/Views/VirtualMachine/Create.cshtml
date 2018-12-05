@@ -1,0 +1,195 @@
+﻿@model CYBInfrastructure.Web.Models.InventoryViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2> Virtual Machine Setup</h2>
+
+<link href="~/Content/css/vendor/sweetalert2.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/icons.min.css" rel="stylesheet" type="text/css" />
+<link href="~/Content/css/app.min.css" rel="stylesheet" type="text/css" />
+
+
+
+@using (Html.BeginForm())
+{
+    @*@Html.HiddenFor(model => model.Id)*@
+
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <form action="#">
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+            @if (ViewBag.Message != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-10"> @ViewBag.message</div>
+                </div>
+            }
+
+
+
+            <div class="form-group">
+                @*@if (ViewBag.Message != null)
+            {
+                <div class="form-group">
+                    <div class="col-md-10"> @ViewBag.message</div>
+                </div>
+            }*@
+                <label class="control-label col-md-6"> Server Name</label>
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.ServerName, new { htmlAttributes = new { @class = "form-control", @placeholder = "ServerName", id = "ServerName", @type = "text", @required = "" } })
+                    @Html.ValidationMessageFor(model => model.ServerName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-6"> Primary IP</label>
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.PrimaryIP, "Primary IP", new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.PrimaryIP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.SecondaryIP, "Secondary IP", htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextAreaFor(e => e.SecondaryIP, 3, 50, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.SecondaryIP, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-2"> Date </label>
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control", @type = "date" } })
+                    @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-6">
+                    @Html.TextAreaFor(e => e.Description, 5, 50, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-6"> Location</label>
+                <div class="col-md-3">
+                    <select name="LocationId" class="form-control">
+                        <option>Select Location</option>
+                        @foreach (var item in Model.Locations)
+                        {
+                            <option id="@item.Id" value="@item.Id">@item.LocationName</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-md-6"> Unit</label>
+                <div class="col-md-3">
+                    <select name="UnitId" class="form-control">
+                        <option>Select Unit</option>
+                        @foreach (var item in Model.Units)
+                        {
+                            <option id="@item.Id" value="@item.Id">@item.UnitName</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+
+
+
+
+            <div class="form-group">
+                <label class="control-label col-md-6"> VLAN</label>
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.VLAN, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.VLAN, "", new { @class = "text-danger" })
+                </div>
+            </div> <div class="form-group">
+                <label class="control-label col-md-6"> Gateway</label>
+                <div class="col-md-3">
+                    @Html.EditorFor(model => model.Gateway, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Gateway, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-md-6"> Environment</label>
+                <div class="col-md-3">
+                    @Html.EnumDropDownListFor(model => model.Environment, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Environment, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label class="control-label col-md-6"> Host </label>
+                <div class="col-md-3">
+                    <select name="HostID" class="form-control">
+                        <option>Select Host</option>
+                        @foreach (var item in Model.Hosts)
+                        {
+                            <option id="@item.id" value="@item.id">@item.HostName</option>
+                        }
+                    </select>
+
+                </div>
+            </div>
+            @*<div class="form-group">
+            <label class="control-label col-md-6"> Server Type</label>
+            <div class="col-md-3">
+                @Html.EnumDropDownListFor(model => model.ServerType, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ServerType, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+            @*<div class="form-group">
+            <label class="control-label col-md-6"> Server Name</label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ServerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServerName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-6"> Server Name</label>
+            <div class="col-md-3">
+                @Html.EditorFor(model => model.ServerName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServerName, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Create" class="btn btn-primary" onclick="return confirm('Are you sure you  to Add?')" />
+                </div>
+            </div>
+
+        </form>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
+
+<script src="~/Content/js/vendor.min.js"></script>
+<script src="~/Content/js/app.min.js"></script>
+
+
+<!-- App js -->
+<script src="~/Content/js/vendor/sweetalert2.min.js"></script>
+<script src="~/Content/js/pages/sweet-alerts.init.js"></script>
+
+
+

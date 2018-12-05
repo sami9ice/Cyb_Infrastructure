@@ -1,0 +1,43 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.Department
+
+@{
+    ViewBag.Title = "Department Details";
+    Layout = "~/Views/Shared/_LayoutPage.cshtml";
+}
+
+<h2>Department Details</h2>
+
+<div>
+    
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.DepartmentName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DepartmentName, "Name Of Department")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsActive)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsActive, "Check If Active")
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Location.LocationName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Location.LocationName, "Name Of Location")
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Back to List", "Index", new { @class = "btn btn-success" })
+</p>
