@@ -14,9 +14,9 @@ namespace CYBInfrastructure.Web.Models
 
         [Key]
         public int UserID { get; set; }
-        [Required(ErrorMessage = "First Name is required")]
+        [Required(ErrorMessage = "Staff ID is required")]
         public string StaffID { get; set; }
-        [Required(ErrorMessage = "Last Name is required")]
+        [Required(ErrorMessage = "Staff Name is required")]
         public string StaffName { get; set; }
 
         //[Required(ErrorMessage = "Email is required")]

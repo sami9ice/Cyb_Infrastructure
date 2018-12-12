@@ -15,7 +15,8 @@ using OfficeOpenXml;
 namespace CYBInfrastructure.Web.Controllers
 {
     //[AllowAnonymous]
-  //  [Authorize]
+    //[Authorize(Roles = "RoleAdmin")]
+
     public class LocationController : Controller
     {
         public LocationController()
@@ -50,7 +51,10 @@ namespace CYBInfrastructure.Web.Controllers
             }        
 
         }
-       // [Authorize]
+        [HttpGet]
+        // [Authorize]
+        //[Authorize(Roles = "RoleAdmin, UserRole")]
+        [Authorize(Roles = "RoleAdmin")]
         public ActionResult Create()
         {
             

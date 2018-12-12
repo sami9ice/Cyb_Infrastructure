@@ -13,15 +13,22 @@ namespace CYBInfracstructure.DataStructure.Entities
     {
 
         [Key]
-
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]
 
-        public int UserId { get; set; }
+
+        public int Id { get; set; }
+
+        //public int RoleId { get; set; }
+        public string RoleName { get; set; }
+
+        public virtual Role Role { get; set; }
+
+        public IEnumerable<Role> Roles { get; set; }
+        public int UserAccountId { get; set; }
 
 
+        public virtual UserAccount UserAccount { get; set; }
 
-        public int RoleId { get; set; }
-        public List<SelectListItem> RolesList { get; set; }
-        public List<SelectListItem> Userlist { get; set; }
+        public IEnumerable<UserAccount> UserAccounts { get; set; }
     }
 }

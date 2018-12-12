@@ -5,6 +5,9 @@ namespace CYBInfracstructure.DataStructure.Migrations
     
     public partial class UsersInRole : DbMigration
     {
+        //public Func<string> RoleName { get; set; }
+        //public Func<string> StaffId { get; set; }
+
         public override void Up()
         {
             DropForeignKey("dbo.AspNetUserRoles", "RoleId", "dbo.AspNetRoles");

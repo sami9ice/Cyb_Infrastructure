@@ -1,0 +1,39 @@
+﻿@model IEnumerable<CYBInfracstructure.DataStructure.Entities.Role>
+
+@{
+    ViewBag.Title = "DisplayAllRoles";
+}
+
+<h2>DisplayAllRoles</h2>
+
+<p>
+<p class="text-muted font-13 mb-4">
+    <a class="btn btn-primary" style=" margin-bottom:10px" href="/Account/RoleCreate" id="toast"><i class="fa fa-plus"></i> Add New</a>
+
+
+
+@*@Html.ActionLink("Create New", "Create")*@
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.RoleName)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.RoleName)
+            </td>
+            <td>
+                @*@Html.ActionLink("Edit", "Edit", new { id = item.RoleId }) |
+                @Html.ActionLink("Details", "Details", new { id = item.RoleId }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.RoleId })*@
+            </td>
+        </tr>
+    }
+
+</table>

@@ -32,7 +32,6 @@ C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\b
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\bin\Debug\OfficeOpenXml.Core.ExcelPackage.pdb
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.initial.resources
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.csproj.GenerateResource.cache
-C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.csprojAssemblyReference.cache
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations._enum.resources
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.initial1.resources
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.initial2.resources
@@ -59,3 +58,14 @@ C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\b
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\bin\Debug\System.Web.WebPages.xml
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\bin\Debug\System.Web.WebPages.Deployment.xml
 C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\bin\Debug\System.Web.WebPages.Razor.xml
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.UserAcctUpdate.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.staff.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.useracc.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.userinRoles.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.onetomany.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.onetomany1.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.onetomany11.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.onetomany2.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.roles.resources
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.csprojAssemblyReference.cache
+C:\Users\sagwo\source\repos\CYBInfrastructure\CYBInfracstructure.DataStructure\obj\Debug\CYBInfracstructure.DataStructure.Migrations.rolename.resources

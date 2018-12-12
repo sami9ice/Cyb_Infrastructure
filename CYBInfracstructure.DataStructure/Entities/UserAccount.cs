@@ -12,16 +12,13 @@ namespace CYBInfracstructure.DataStructure.Entities
        
         [Key]
         public int UserID { get; set; }
-        [Required(ErrorMessage ="First Name is required")]
-        public string StaffID   { get; set; }
-        [Required(ErrorMessage = "Last Name is required")]
+        [Required(ErrorMessage = "Staff ID is required")]
+        public string StaffID { get; set; }
+        [Required(ErrorMessage = "Staff Name is required")]
         public string StaffName { get; set; }
 
-        //[Required(ErrorMessage = "Email is required")]
-        //[DataType(DataType.EmailAddress)]
-        //public string Email { get; set; }
 
-        [Required(ErrorMessage = "Username is required")]
+        //[Required(ErrorMessage = "Email is required")]
         [DataType(DataType.EmailAddress)]
 
         public string Email { get; set; }
@@ -36,7 +33,11 @@ namespace CYBInfracstructure.DataStructure.Entities
 
         public string ResetPasswordCode { get; set; }
         //[Required(ErrorMessage = "This field is required")]
+        public virtual List<UsersInRoles> UsersInRoles { get; set; }
 
-        //public string ActivationCode { get; set; }
+
+
+
+     
     }
 }

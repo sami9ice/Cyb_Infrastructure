@@ -165,6 +165,46 @@
     <Compile Include="Migrations\201811292237182_UsersInRole.Designer.cs">
       <DependentUpon>201811292237182_UsersInRole.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201812051548421_UserAcctUpdate.cs" />
+    <Compile Include="Migrations\201812051548421_UserAcctUpdate.Designer.cs">
+      <DependentUpon>201812051548421_UserAcctUpdate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061205209_staff.cs" />
+    <Compile Include="Migrations\201812061205209_staff.Designer.cs">
+      <DependentUpon>201812061205209_staff.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061349374_useracc.cs" />
+    <Compile Include="Migrations\201812061349374_useracc.Designer.cs">
+      <DependentUpon>201812061349374_useracc.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812061404303_userinRoles.cs" />
+    <Compile Include="Migrations\201812061404303_userinRoles.Designer.cs">
+      <DependentUpon>201812061404303_userinRoles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812062117116_onetomany.cs" />
+    <Compile Include="Migrations\201812062117116_onetomany.Designer.cs">
+      <DependentUpon>201812062117116_onetomany.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812062119432_onetomany1.cs" />
+    <Compile Include="Migrations\201812062119432_onetomany1.Designer.cs">
+      <DependentUpon>201812062119432_onetomany1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812062240554_onetomany11.cs" />
+    <Compile Include="Migrations\201812062240554_onetomany11.Designer.cs">
+      <DependentUpon>201812062240554_onetomany11.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812071140270_onetomany2.cs" />
+    <Compile Include="Migrations\201812071140270_onetomany2.Designer.cs">
+      <DependentUpon>201812071140270_onetomany2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812092217012_roles.cs" />
+    <Compile Include="Migrations\201812092217012_roles.Designer.cs">
+      <DependentUpon>201812092217012_roles.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\201812112315230_rolename.cs" />
+    <Compile Include="Migrations\201812112315230_rolename.Designer.cs">
+      <DependentUpon>201812112315230_rolename.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -198,6 +238,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201811292237182_UsersInRole.resx">
       <DependentUpon>201811292237182_UsersInRole.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812051548421_UserAcctUpdate.resx">
+      <DependentUpon>201812051548421_UserAcctUpdate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061205209_staff.resx">
+      <DependentUpon>201812061205209_staff.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061349374_useracc.resx">
+      <DependentUpon>201812061349374_useracc.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812061404303_userinRoles.resx">
+      <DependentUpon>201812061404303_userinRoles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812062117116_onetomany.resx">
+      <DependentUpon>201812062117116_onetomany.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812062119432_onetomany1.resx">
+      <DependentUpon>201812062119432_onetomany1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812062240554_onetomany11.resx">
+      <DependentUpon>201812062240554_onetomany11.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812071140270_onetomany2.resx">
+      <DependentUpon>201812071140270_onetomany2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812092217012_roles.resx">
+      <DependentUpon>201812092217012_roles.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201812112315230_rolename.resx">
+      <DependentUpon>201812112315230_rolename.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

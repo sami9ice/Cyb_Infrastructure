@@ -15,7 +15,7 @@ namespace CYBInfrastructure.Web.Controllers
     //[AllowAnonymous]
     //[Authorize(Roles = "Administrator")]
 
-    //[Authorize (Roles ="Administrator")]
+    //[Authorize(Roles = "UserRole")]
     public class CredentialController : Controller
     {
             public CredentialController()
@@ -35,7 +35,7 @@ namespace CYBInfrastructure.Web.Controllers
                 this.hostManager = hostManager;
             }
         //[Authorize(Roles ="mikel")]
-        [Authorize(Roles = "Administrator")]
+        //[Authorize(Roles = "UserRole")]
 
         public ActionResult Index()
 
@@ -62,9 +62,9 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
 
-        [Authorize]
         [HttpGet]
-            public ActionResult Create()
+        [Authorize(Roles = "RoleAdmin")]
+        public ActionResult Create()
             {
                 var Inventory = InventoryManager.GetAll().ToList();
                 var Host = hostManager.GetAll().ToList();
@@ -118,9 +118,9 @@ namespace CYBInfrastructure.Web.Controllers
             return View(credModel);
             }
 
-        [Authorize]
         [HttpGet]
-            public ActionResult Edit(int? id)
+        [Authorize(Roles = "RoleAdmin")]
+        public ActionResult Edit(int? id)
             {
                 if (id == null)
                 {
@@ -169,9 +169,9 @@ namespace CYBInfrastructure.Web.Controllers
                 return View();
             }
 
-        [Authorize]
         [HttpGet]
-            public ActionResult Delete(int? id)
+        [Authorize(Roles = "RoleAdmin")]
+        public ActionResult Delete(int? id)
             {
             CredentialSetup cred = _cred.Find(x => x.Id == id).FirstOrDefault();
             return View(cred);

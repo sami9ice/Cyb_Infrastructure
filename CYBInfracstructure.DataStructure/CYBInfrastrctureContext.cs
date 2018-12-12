@@ -47,6 +47,8 @@ namespace CYBInfracstructure.DataStructure
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
         }
 
+        //public System.Data.Entity.DbSet<CYBInfrastructure.Web.Models.RoleViewModel> RoleViewModels { get; set; }
+
 
         //public System.Data.Entity.DbSet<CYBInfrastructure.Web.Models.HostViewModel> HostViewModels { get; set; }
 

@@ -1,5 +1,5 @@
 ﻿@*@model CYBInfracstructure.DataStructure.Entities.UserAccount*@
-@model CYBInfrastructure.Web.Models.UserAccountModel
+@model CYBInfrastructure.Web.Models.LoginModel
 
 @{
     ViewBag.Title = "Login";
@@ -39,8 +39,8 @@
 
                                 <div class="form-group mb-3">
                                     <label for="username">Staff ID</label>
-                                    @Html.EditorFor(model => model.StaffID, new { htmlAttributes = new { @class = "form-control", @placeholder = "StaffID", @required = "", @id = "StaffID", @type = "name" } })
-                                    @Html.ValidationMessageFor(model => model.StaffID, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.StaffId, new { htmlAttributes = new { @class = "form-control", @placeholder = "StaffID", @required = "", @id = "StaffID", @type = "name" } })
+                                    @Html.ValidationMessageFor(model => model.StaffId, "", new { @class = "text-danger" })
 
                                 </div>
 

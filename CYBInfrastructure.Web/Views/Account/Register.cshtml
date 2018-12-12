@@ -58,14 +58,14 @@
                                 </div>*@
 
                                  <div class="form-group mb-3">
-                                    <label for="firstname">First Name</label>
-                                    @Html.EditorFor(model => model.StaffID, new { htmlAttributes = new { @class = "form-control", @placeholder = "First Name", id = "Roles", @type = "text", @required = "" } })
+                                    <label for="firstname">Staff ID</label>
+                                    @Html.EditorFor(model => model.StaffID, new { htmlAttributes = new { @class = "form-control", @placeholder = "Staff ID", id = "Roles", @type = "text", @required = "" } })
                                     @Html.ValidationMessageFor(model => model.StaffID, "", new { @class = "text-danger" })
                                 </div>
 
                                 <div class="form-group mb-3">
                                     <label for="lastname">Staff Name</label>
-                                    @Html.EditorFor(model => model.StaffName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Last Name", id = "lastname", @type = "text", @required = "" } })
+                                    @Html.EditorFor(model => model.StaffName, new { htmlAttributes = new { @class = "form-control", @placeholder = "Staff Name", id = "lastname", @type = "text", @required = "" } })
                                     @Html.ValidationMessageFor(model => model.StaffName, "", new { @class = "text-danger" })
                                 </div>
 

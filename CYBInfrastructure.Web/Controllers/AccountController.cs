@@ -16,21 +16,21 @@ using CYBInfrastructure.Web.Model;
 
 namespace CYBInfrastructure.Web.Controllers
 {
-    [AllowAnonymous]
+    //[AllowAnonymous]
     public class AccountController : Controller
     {
         CYBInfrastrctureContext db = new CYBInfrastrctureContext();
 
         // GET: Account
         public ActionResult Index(UserAccountListViewModel userAccount)
-        {
+   {
             using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
             {
                 return View(userAccount);
             }
         }
 
-
+        [Authorize(Roles = "RoleAdmin")]
         public ActionResult Register()
         {
             return View();
@@ -38,15 +38,16 @@ namespace CYBInfrastructure.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Register([Bind(Include = "UserID,Username,Roles,LastName,Email,Password,ConfirmPassword,ResetPassword,")]
+        public ActionResult Register([Bind(Include = "UserID,StaffID,StaffName,LastName,Email,Password,ConfirmPassword,ResetPassword,")]
                             UserAccountModel user)
         {
-            bool Register = db.UserAccounts.Any(x => x.StaffID == user.StaffID && x.UserID != user.UserID);
+
+            bool Register = db.UserAccounts.Any(x => x.StaffID == user.StaffID && x.UserID == user.UserID);
             if (Register == true)
             {
                 ModelState.AddModelError("Username", "Username already exists, Try another one");
             }
-            if (ModelState.IsValid)
+            else
             {
                 var dpt = new UserAccount
                 {
@@ -76,26 +77,40 @@ namespace CYBInfrastructure.Web.Controllers
 
 
 
-
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Login(UserAccountModel model )
+        public ActionResult Login(LoginModel model )
         {
 
 
             using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
             {
-               
-                var usr = db.UserAccounts.Where(u => u.StaffID == model.StaffID && u.Password == model.Password).FirstOrDefault();
+
+                var usr = (from user in db.Set<UserAccount>()
+                           where user.StaffID == model.StaffId
+                           where user.Password == model.Password
+                           select user).FirstOrDefault();
+
                 if (usr != null)
                 {
 
                     Session["UserId"] = usr.UserID.ToString();
                     Session["Staff"] = usr.StaffID.ToString();
+                    //if (Roles.Provider.(usr.StaffID, "UserRole"))
+                    //{
+                    //    return RedirectToAction("Index", "Location");
+                    //}
+                    //else
+                    //{
+                    //    return RedirectToAction("Index", "");
+                    //}
+
+
                     return RedirectToAction("Index", "Location");
+
                 }
                 else
                 {
@@ -265,7 +280,7 @@ namespace CYBInfrastructure.Web.Controllers
             return View(model);
         }
 
-
+        [Authorize(Roles ="RoleAdmin")]
         [HttpGet]
 
         public ActionResult RoleCreate()
@@ -331,6 +346,7 @@ namespace CYBInfrastructure.Web.Controllers
 
         }
 
+        [Authorize(Roles = "RoleAdmin")]
 
         [HttpGet]
 
@@ -413,6 +429,7 @@ namespace CYBInfrastructure.Web.Controllers
 
         }
 
+        //[Authorize(Roles = "RoleAdmin")]
 
         [HttpGet]
 
@@ -459,13 +476,14 @@ namespace CYBInfrastructure.Web.Controllers
             if (ModelState.IsValid)
 
             {
-               
-               if (Get_CheckUserRoles(Convert.ToInt32(objvm.UserID)) == true)
 
+                if (Get_CheckUserRoles(objvm.UserID) == true)
+
+                //if (objIAccountData.Get_CheckUserRoles(objvm.UserID) == true)
 
                 {
 
-                        ViewBag.ResultMessage = "This user already has the role specified !";
+                    ViewBag.ResultMessage = "This user already has the role specified !";
 
                 }
 
@@ -479,11 +497,12 @@ namespace CYBInfrastructure.Web.Controllers
                     //string Username = objvm.UserID;
                     
                  //var Username  = Int32.TryParse(objvm.UserID, out GetUserName_BY_UserID) ;
-                    var UserName = GetUserName_BY_UserID(Convert.ToInt32(objvm.UserID));
+                    var result = GetUserName_BY_UserID(objvm.UserID);
+                    Roles.AddUserToRole(result, objvm.RoleName);
 
 
+                    
 
-                    Roles.AddUserToRole(UserName, objvm.RoleName);
 
 
 
@@ -515,21 +534,17 @@ namespace CYBInfrastructure.Web.Controllers
 
         }
 
-
-
-        public bool Get_CheckUserRoles(int UserId)
-
+        private bool Get_CheckUserRoles(string userID)
         {
-
             using (CYBInfrastrctureContext context = new CYBInfrastrctureContext())
 
             {
 
                 var data = (from WR in context.UsersInRole
 
-                            join R in context.Roles on WR.RoleId equals R.RoleId
+                            join R in context.Roles on WR.RoleName equals R.RoleName
 
-                            where WR.UserId == UserId
+                            where WR.Role.RoleName == userID
 
                             orderby R.RoleId
 
@@ -537,7 +552,7 @@ namespace CYBInfrastructure.Web.Controllers
 
                             {
 
-                                WR.UserId
+                                WR.UserAccountId
 
                             }).Count();
 
@@ -560,13 +575,58 @@ namespace CYBInfrastructure.Web.Controllers
                 }
 
             }
-
-
-
         }
 
+        //public bool Get_CheckUserRoles(int UserId)
 
-        public string GetUserName_BY_UserID(int UserId)
+        //{
+
+        //    using (CYBInfrastrctureContext context = new CYBInfrastrctureContext())
+
+        //    {
+
+        //        var data = (from WR in context.UsersInRole
+
+        //                    join R in context.Roles on WR.RoleId equals R.RoleId
+
+        //                    where WR.UserId == UserId
+
+        //                    orderby R.RoleId
+
+        //                    select new
+
+        //                    {
+
+        //                        WR.UserId
+
+        //                    }).Count();
+
+
+
+        //        if (data > 0)
+
+        //        {
+
+        //            return true;
+
+        //        }
+
+        //        else
+
+        //        {
+
+        //            return false;
+
+        //        }
+
+        //    }
+
+
+
+        //}
+
+
+        public string GetUserName_BY_UserID(string UserName)
 
         {
 
@@ -574,18 +634,22 @@ namespace CYBInfrastructure.Web.Controllers
 
             {
 
-                var UserName = (from UP in context.UserAccounts
+                var result = (from UP in context.UserAccounts
 
-                                where UP.UserID == UserId
+                                where UP.StaffID == UserName
 
                                 select UP.StaffID).SingleOrDefault();
 
-                return UserName;
+                return result;
+
+               
+
 
             }
 
         }
 
+        [Authorize(Roles = "RoleAdmin")]
 
         [HttpGet]
 
@@ -613,9 +677,9 @@ namespace CYBInfrastructure.Web.Controllers
 
                 var Alldata = (from User in db.UserAccounts
 
-                               join WU in db.UsersInRole on User.UserID equals WU.UserId
+                               join WU in db.UsersInRole on User.UserID equals WU.UserAccountId
 
-                               join WR in db.Roles on WU.RoleId equals WR.RoleId
+                               join WR in db.Roles on WU.RoleName equals WR.RoleName
 
                                select new AllroleandUser { UserName = User.StaffID, RoleName = WR.RoleName }).ToList();
 
@@ -626,6 +690,20 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
         }
+
+
+        //  [NonAction]
+        //public string GetRoleBy_UserID(string UserId)
+        //{
+        //    return objIAccountData.GetRoleByUserID(UserId);
+        //}
+
+        //[NonAction]
+        //public string GetUserID_By_UserName(string UserName)
+        //{
+        //    return objIAccountData.GetUserID_By_UserName(UserName);
+        //}
+
 
     }
 

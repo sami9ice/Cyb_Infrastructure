@@ -9,7 +9,7 @@ namespace CYBInfracstructure.DataStructure.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(CYBInfracstructure.DataStructure.CYBInfrastrctureContext context)
