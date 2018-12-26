@@ -108,7 +108,7 @@
 
         <div class="col-md-3">
             <select name="UnitId" class="form-control">
-                <option>Select Location</option>
+                <option>Select Unit</option>
                 @foreach (var item in ViewBag.units)
                 {
                     <option id="@item.Id" @(item.Id == Model.UnitId ? "selected" : "") value="@item.Id">@item.UnitName</option>

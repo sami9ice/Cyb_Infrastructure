@@ -27,8 +27,6 @@ namespace CYBInfracstructure.DataStructure.Entities
         
 
 
-
-
     }
 
     public enum Hypervisors
@@ -36,7 +34,7 @@ namespace CYBInfracstructure.DataStructure.Entities
     {
         Physical,
         Hyperview,
-        VirtualMachine
+        VMware
         
     }
 }

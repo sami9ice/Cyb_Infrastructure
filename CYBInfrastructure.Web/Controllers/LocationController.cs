@@ -15,7 +15,14 @@ using OfficeOpenXml;
 namespace CYBInfrastructure.Web.Controllers
 {
     //[AllowAnonymous]
-    //[Authorize(Roles = "RoleAdmin")]
+    //[Authorize( Users = "SuperAdmin")]
+
+   
+    //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+
+      [Filters.AuthorizeAdmin]
+
+
 
     public class LocationController : Controller
     {
@@ -29,11 +36,16 @@ namespace CYBInfrastructure.Web.Controllers
             this._locationmanager = _locationmanager;
         }
         // GET: Location
-      
+        //[Authorize]
+        //[AuthorizeUserAccessLevel(UserRole = "Admin")]
+
         public ActionResult Index()
+
         {
+
             try
             {
+
                 var locations = _locationmanager.GetAll();
                 var llvm = new LocationListViewModel
                 {
@@ -51,10 +63,59 @@ namespace CYBInfrastructure.Web.Controllers
             }        
 
         }
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,")]
+        //[Filters.AuthorizeUserRole]
+        public ActionResult AdminIndex()
+        {
+            try
+            {
+                var locations = _locationmanager.GetAll();
+                var llvm = new LocationListViewModel
+                {
+                    Locations = locations
+                };
+                //ViewData["Username"] = User.Identity.Name;
+                return View(llvm);
+            }
+            catch (Exception ex)
+            {
+
+                //Log exception
+                return View(ex.Message, "Error");
+
+            }
+
+        }
+
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+        //public ActionResult UserIndex()
+        //{
+
+        //    try
+        //    {
+        //        var locations = _locationmanager.GetAll();
+        //        var llvm = new LocationListViewModel
+        //        {
+        //            Locations = locations
+        //        };
+        //        //ViewData["Username"] = User.Identity.Name;
+        //        return View(llvm);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        //Log exception
+        //        return View(ex.Message, "Error");
+
+        //    }
+
+        //}
+
+
         [HttpGet]
         // [Authorize]
         //[Authorize(Roles = "RoleAdmin, UserRole")]
-        [Authorize(Roles = "RoleAdmin")]
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
         public ActionResult Create()
         {
             
@@ -90,7 +151,7 @@ namespace CYBInfrastructure.Web.Controllers
 
             //return View();         
         }
-        //[Authorize]
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -135,7 +196,7 @@ namespace CYBInfrastructure.Web.Controllers
 
             return View(locationToUpdate);
         }
-        //[Authorize]
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
         [HttpGet]
         public ActionResult Delete(int? id)
         {          
@@ -158,6 +219,8 @@ namespace CYBInfrastructure.Web.Controllers
             Location location = _locationmanager.Find(x => x.Id == id).FirstOrDefault();
             return View(location);
         }
+
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
 
         public ActionResult Export()
         {
@@ -192,6 +255,10 @@ namespace CYBInfrastructure.Web.Controllers
 
             return RedirectToAction("Index");
         }
+
+
+
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
 
         public ActionResult Pdf()
         {

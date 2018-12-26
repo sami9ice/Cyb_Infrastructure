@@ -18,17 +18,13 @@ namespace CYBInfracstructure.DataStructure.Entities
 
         public int Id { get; set; }
 
-        //public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int RoleId { get; set; }
+        //public string RoleName { get; set; }
 
         public virtual Role Role { get; set; }
-
-        public IEnumerable<Role> Roles { get; set; }
-        public int UserAccountId { get; set; }
-
+        public int UserID { get; set; }
 
         public virtual UserAccount UserAccount { get; set; }
 
-        public IEnumerable<UserAccount> UserAccounts { get; set; }
     }
 }

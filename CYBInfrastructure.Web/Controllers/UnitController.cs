@@ -15,6 +15,10 @@ namespace CYBInfrastructure.Web.Controllers
 {
 
     //[Authorize]
+    //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+
+    [Filters.AuthorizeAdmin]
+
     public class UnitController : Controller
     {
         public UnitController()
@@ -113,7 +117,6 @@ namespace CYBInfrastructure.Web.Controllers
 
             return View(unitModel);
         }
-        [Authorize]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -155,7 +158,6 @@ namespace CYBInfrastructure.Web.Controllers
             return View();
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult Delete(int? id)
         {

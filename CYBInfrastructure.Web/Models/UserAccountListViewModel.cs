@@ -8,7 +8,7 @@ namespace CYBInfrastructure.Web.Models
 {
     public class UserAccountListViewModel
     {
-        public IEnumerable<UserAccountModel> UserAccounts { get; set; }
+        public IEnumerable<UserAccount> UserAccounts { get; set; }
 
       
     }

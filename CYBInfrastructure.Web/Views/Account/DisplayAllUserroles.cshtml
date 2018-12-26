@@ -3,7 +3,7 @@
 
 
 @{
-    ViewBag.Title = "DisplayAllUserroles";
+    ViewBag.Title = "Display All User roles";
 }
 
 <h2>DisplayAllUserroles</h2>
@@ -20,9 +20,17 @@
 
 {
 
-columns.Add(c => c.UserName).Titled("StaffID").Filterable(true);
+    columns.Add(c => c.UserName).Titled("Staff ID").Filterable(true);
 
-columns.Add(c => c.RoleName).Titled("RoleName").Filterable(true);
+
+    columns.Add(c => c.StaffName).Titled("Staff Name").Filterable(true);
+
+
+    columns.Add(c => c.RoleName).Titled("Role Name").Filterable(true);
+
+
+
 
 }).WithPaging(10).Sortable(true)
+
 

@@ -264,14 +264,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdminController.cs" />
+    <Compile Include="Controllers\AuthorizeUserAccessLevel.cs" />
+    <Compile Include="Controllers\BusAdmin.cs" />
     <Compile Include="Controllers\CredentialController.cs" />
     <Compile Include="Controllers\DepartmentController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HostController.cs" />
-    <Compile Include="Controllers\InventoryController.cs" />
+    <Compile Include="Controllers\VirtualMachineController.cs" />
     <Compile Include="Controllers\LocationController.cs" />
     <Compile Include="Controllers\ServiceController.cs" />
     <Compile Include="Controllers\UnitController.cs" />
+    <Compile Include="Filters\AuthorizeAdmin.cs" />
+    <Compile Include="Filters\AuthorizeUserRole.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -297,7 +301,10 @@
     <Compile Include="Models\UserAccountModel.cs" />
     <Compile Include="Model\AllroleandUser.cs" />
     <Compile Include="Model\AssignRoleVM.cs" />
+    <Compile Include="Model\BusAdmin.cs" />
+    <Compile Include="Model\RoleListViewModel.cs" />
     <Compile Include="Model\RoleViewModel.cs" />
+    <Compile Include="Model\UsersInRoleListViewModel.cs" />
     <Compile Include="Model\UsersInRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WebRoleProvider.cs" />
@@ -1997,7 +2004,7 @@
     <Content Include="Content\toastr.scss" />
     <Content Include="Content\toastr.less" />
     <Content Include="App_Browsers\qt.browser" />
-    <Content Include="Views\Location\Index..cshtml" />
+    <Content Include="Views\Location\UserIndex..cshtml" />
     <Content Include="Views\Account\UsernameExists.cshtml" />
     <Content Include="Views\Account\ForgotPassword.cshtml" />
     <Content Include="Views\Account\ResetPassword.cshtml" />
@@ -2017,6 +2024,18 @@
     <Content Include="Views\Account\RemoveRoleAddedToUser.cshtml" />
     <Content Include="Views\Account\DisplayAllUserroles.cshtml" />
     <Content Include="Views\Account\DisplayAllRoles.cshtml" />
+    <Content Include="Views\Shared\_UserLayoutPage.cshtml" />
+    <Content Include="Views\Credential\UserIndex.cshtml" />
+    <Content Include="Views\Location\UserIndex.cshtml" />
+    <Content Include="Views\Location\AdminIndex.cshtml" />
+    <Content Include="Views\Shared\_AdminLayoutPage.cshtml" />
+    <Content Include="Views\Shared\_defaultLayoutPage.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Admin\Index.cshtml" />
+    <Content Include="Views\Admin\Edit.cshtml" />
+    <Content Include="Views\Admin\Delete.cshtml" />
+    <Content Include="Views\Admin\Edit1.cshtml" />
+    <Content Include="Views\Admin\Edits.cshtml" />
     <None Include="_bin_deployableAssemblies\x86\sqlcese40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceqp40.dll" />
     <None Include="_bin_deployableAssemblies\x86\sqlceme40.dll" />
@@ -2062,7 +2081,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Views\Admin\" />
     <Folder Include="Views\Role\" />
   </ItemGroup>
   <ItemGroup>

@@ -16,6 +16,7 @@ namespace CYBInfrastructure.Web.Controllers
     //[Authorize(Roles = "Administrator")]
 
     //[Authorize(Roles = "UserRole")]
+
     public class CredentialController : Controller
     {
             public CredentialController()
@@ -36,6 +37,8 @@ namespace CYBInfrastructure.Web.Controllers
             }
         //[Authorize(Roles ="mikel")]
         //[Authorize(Roles = "UserRole")]
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+        [Filters.AuthorizeAdmin]
 
         public ActionResult Index()
 
@@ -59,11 +62,41 @@ namespace CYBInfrastructure.Web.Controllers
 
                 }
 
-            }
+        }
+
+        //[AuthorizeUserAccessLevel(UserRole = "UserRole")]
+
+
+        //public ActionResult UserIndex()
+
+        //{
+
+
+        //    try
+        //    {
+        //        var _creds = _cred.GetAll();
+        //        var Clvm = new CredSetupListViewModel
+        //        {
+        //            CredentialSetups = _creds
+        //        };
+        //        return View(Clvm);
+        //    }
+        //    catch (Exception ex)
+        //    {
+
+        //        //Log exception
+        //        return View(ex.Message, "Error");
+
+        //    }
+
+        //}
+
+
 
 
         [HttpGet]
-        [Authorize(Roles = "RoleAdmin")]
+        [Filter.AuthorizeUserRoles]
+
         public ActionResult Create()
             {
                 var Inventory = InventoryManager.GetAll().ToList();
@@ -78,7 +111,7 @@ namespace CYBInfrastructure.Web.Controllers
                 };
 
                 return View(cred);
-            }
+        }
 
             [HttpPost]
             public ActionResult Create(CredSetupModel cvm)
@@ -119,7 +152,7 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
         [HttpGet]
-        [Authorize(Roles = "RoleAdmin")]
+        [Filter.AuthorizeUserRoles]
         public ActionResult Edit(int? id)
             {
                 if (id == null)
@@ -170,7 +203,7 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
         [HttpGet]
-        [Authorize(Roles = "RoleAdmin")]
+        [Filter.AuthorizeUserRoles]
         public ActionResult Delete(int? id)
             {
             CredentialSetup cred = _cred.Find(x => x.Id == id).FirstOrDefault();
@@ -185,13 +218,16 @@ namespace CYBInfrastructure.Web.Controllers
             TempData["Success"] = "Deleted Successfully!";
                 return RedirectToAction("Index");
             }
+            [Filter.AuthorizeUserRoles]
+
             public ActionResult Details(int? id)
             {
             CredentialSetup cred = _cred.Find(x => x.Id == id).FirstOrDefault();
             return View(cred);
             }
 
-            public ActionResult Export()
+
+        public ActionResult Export()
             {
 
                 var list = _cred.GetAll().ToList();
@@ -233,7 +269,7 @@ namespace CYBInfrastructure.Web.Controllers
                 Response.End();
 
                 return RedirectToAction("Index");
-            }
+        }
             public ActionResult Pdf()
             {
                 var list = _cred.GetAll().ToList();

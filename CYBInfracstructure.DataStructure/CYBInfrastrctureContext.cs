@@ -23,7 +23,12 @@ namespace CYBInfracstructure.DataStructure
         public DbSet<UserAccount> UserAccounts{ get; set; }
         public DbSet<Services>Services { get; set; }
         public DbSet<Inventory>Inventories { get; set; }
+
+       
         public DbSet<Host>Hosts { get; set; }
+
+      
+
         public DbSet<CredentialSetup> CredentialSetups { get; set; }
         public DbSet<Role> Roles { get; set; }
         public DbSet<UsersInRoles> UsersInRole { get; set; }

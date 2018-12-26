@@ -15,6 +15,9 @@ using Rotativa.MVC;
 namespace CYBInfrastructure.Web.Controllers
 {
     //[AllowAnonymous]
+    //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+
+    [Filters.AuthorizeAdmin]
 
     public class ServiceController : Controller
     {
@@ -54,7 +57,8 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
         }
-        [Authorize]
+
+
         [HttpGet]
         public ActionResult Create()
         {
@@ -102,7 +106,6 @@ namespace CYBInfrastructure.Web.Controllers
             }
 
         }
-        [Authorize]
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -142,7 +145,6 @@ namespace CYBInfrastructure.Web.Controllers
             }
             return View();
         }
-        [Authorize]
         [HttpGet]
         public ActionResult Delete(int? id)
         {

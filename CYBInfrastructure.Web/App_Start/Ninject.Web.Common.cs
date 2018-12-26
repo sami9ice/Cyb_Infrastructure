@@ -72,6 +72,9 @@ namespace CYBInfrastructure.Web.App_Start
                 new HostModule(),
                 new InventoryModules(),
                 new CredModule (),
+                new UsersInRoleModule(),
+                new RoleModule(),
+                new UserAccountModule(),
 
                 new LocationManagerModule(),
                 new UnitManagerModule(),
@@ -79,7 +82,10 @@ namespace CYBInfrastructure.Web.App_Start
                 new ServiceManagerModules(),
                 new InventoryManagerModules(),
                 new HostManagerModule(),
-                new CredManagerModule()
+                new CredManagerModule(),
+                new UsersInRoleManagerModule(),
+                new RoleManagerModule(),
+                new UserAccountManagerModule()
             };
 
             kernel.Load(modules);

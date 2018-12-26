@@ -6,6 +6,7 @@
 
 
 
+<h2>Manage Unit</h2>
 
 <div class="row">
     <div class="col-12">
@@ -21,18 +22,22 @@
 
                 </p>
                 <p>
-                    @Html.ActionLink("Export To Excel", "Export", "Unit", new { @class = "btn btn-success" }) 
+                    @Html.ActionLink("Export To Excel", "Export", "Unit", new { @class = "btn btn-success" })
                     @*@Html.ActionLink("Export to Pdf", "Pdf", "Unit", new { @class = "btn btn-primary" })*@
                 </p>
 
                 <table id="basic-datatable" class="table dt-responsive nowrap">
                     <thead>
                         <tr>
-                            <th>Name of Unit</th>
-                            <th>Date Created</th>
-                            <th>Department</th>
-                            <th>Location</th>
-                            <th>Action</th>
+                            
+                                <th>Name of Unit</th>
+                                <th>Date Created</th>
+                                <th>Department</th>
+                                <th>Location</th>
+                                <th>Action</th>
+                            
+
+
 
                         </tr>
                     </thead>
@@ -40,26 +45,26 @@
                     <tbody>
                         @foreach (var item in Model.Units)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UnitName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Department.DepartmentName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Location.LocationName)
-                            </td>
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = " margin-bottom:10px" })
-                                @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success", @style = " margin-bottom:10px" })*@
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = " margin-bottom:10px" })
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UnitName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Department.DepartmentName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Location.LocationName)
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = " margin-bottom:10px" })
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success", @style = " margin-bottom:10px" })*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = " margin-bottom:10px" })
+                                </td>
 
-                        </tr>
+                            </tr>
 
                         }
 

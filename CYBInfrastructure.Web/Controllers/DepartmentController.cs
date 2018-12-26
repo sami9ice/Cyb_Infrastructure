@@ -15,6 +15,9 @@ using Rotativa.MVC;
 
 namespace CYBInfrastructure.Web.Controllers
 {
+    //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin,Admin,UserRole")]
+
+    [Filters.AuthorizeAdmin]
     public class DepartmentController : Controller
     {
         public DepartmentController()
@@ -52,7 +55,6 @@ namespace CYBInfrastructure.Web.Controllers
         }
 
 
-        [Authorize]
 
         [HttpGet]
         public ActionResult Create()
@@ -103,7 +105,6 @@ namespace CYBInfrastructure.Web.Controllers
 
         }
 
-        [Authorize]
         [HttpGet]
         public ActionResult Edit(int? id)       
         {
@@ -143,7 +144,6 @@ namespace CYBInfrastructure.Web.Controllers
             }
             return View();
         }
-        [Authorize]
         [HttpGet]
         public ActionResult Delete(int? id)
         {

@@ -8,6 +8,7 @@
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
 
+<h2>Manage Virtual Machine</h2>
 
 <div class="row">
     <div class="col-12">
@@ -29,9 +30,9 @@
 
 
                 @*@if (TempData["Success"] != null)
-        {
-            <p class="alert alert-success" id="successMessage" fade >@TempData["Success"]</p>
-        }*@
+                    {
+                        <p class="alert alert-success" id="successMessage" fade >@TempData["Success"]</p>
+                    }*@
                 <table id="basic-datatable" class="table dt-responsive nowrap">
                     <thead>
                         <tr>
@@ -39,7 +40,6 @@
                             <th>Primary IP</th>
                             <th>Secondary IP</th>
                             <th>Date</th>
-
                             <th>Description</th>
                             <th>Location</th>
                             <th>Unit</th>
@@ -47,7 +47,6 @@
                             <th>Gatway</th>
                             <th>Environment</th>
                             <th>Host Name</th>
-
                             <th> Action </th>
 
 
@@ -58,54 +57,54 @@
                     <tbody>
                         @foreach (var item in Model.Inventories)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.ServerName)
-                            </td>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.ServerName)
+                                </td>
 
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PrimaryIP)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.SecondaryIP)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Date)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Location.LocationName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Unit.UnitName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.VLAN)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gateway)
-                            </td>
-                            @*<td>
-            @Html.DisplayFor(modelItem => item.ServerType)
-        </td>*@
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Environment)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Host.HostName)
-                            </td>
-                            @*<td>
-        @Html.DisplayFor(modelItem => item.Department.Location.LocationName)
-                     </td>*@
-                            <td>
-                                @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = " margin-bottom:10px" })
-                                @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success", @style = " margin-bottom:10px" })*@
-                                @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = " margin-bottom:10px" })
-                            </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrimaryIP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.SecondaryIP)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Date)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Location.LocationName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Unit.UnitName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.VLAN)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Gateway)
+                                </td>
+                                @*<td>
+                                        @Html.DisplayFor(modelItem => item.ServerType)
+                                    </td>*@
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Environment)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Host.HostName)
+                                </td>
+                                @*<td>
+                                    @Html.DisplayFor(modelItem => item.Department.Location.LocationName)
+                                                 </td>*@
+                                <td>
+                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn btn-primary", @style = " margin-bottom:10px" })
+                                    @*@Html.ActionLink("Details", "Details", new { id = item.Id }, new { @class = "btn btn-success", @style = " margin-bottom:10px" })*@
+                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id }, new { @class = "btn btn-danger", @style = " margin-bottom:10px" })
+                                </td>
 
-                        </tr>
+                            </tr>
 
                         }
 
@@ -137,7 +136,7 @@
 
 
 
-    @*//$(function () {
+@*//$(function () {
     //    $("#showtoast").toastr["success"]({
     //        "displayTime": 2000,
     //        "message": "Toast ",

@@ -1,0 +1,69 @@
+﻿@model CYBInfracstructure.DataStructure.Entities.UsersInRoles
+
+@{
+    ViewBag.Title = "Edit1";
+    Layout = "~/Views/Shared/_LayoutPage1.cshtml";
+}
+
+<h2>Edit1</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+<div class="form-horizontal">
+    <h4>UsersInRoles</h4>
+    <hr />
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.HiddenFor(model => model.Id)
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.RoleId, "RoleId", htmlAttributes: new { @class = "control-label col-md-2" })
+        <select name="RoleId" class="form-control">
+            <option>Select Role Name</option>
+            @foreach (var item in ViewBag.role)
+
+            {
+                <option id="@item.RoleId" @(item.RoleId == Model.RoleId ? "selected" : "") value="@item.RoleId">@item.RoleName</option>
+            }
+
+
+
+        </select>
+    </div>
+
+    @*<div class="form-group">
+        <label class="control-label col-md-2"> Staff Name </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.UserAccount.StaffName, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserAccount.StaffName, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2"> Staff ID </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.UserAccount.StaffID, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserAccount.StaffID, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-md-2"> Email Addres </label>
+        <div class="col-md-3">
+            @Html.EditorFor(model => model.UserAccount.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.UserAccount.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>*@
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Save" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

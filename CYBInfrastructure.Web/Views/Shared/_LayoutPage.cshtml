@@ -169,10 +169,30 @@
                                 <div class="page-title-box">
                                     <div class="page-title-right">
                                         <ol class="breadcrumb m-0">
-                                            <li class="breadcrumb-item"><a href="/Account/Register">Register</a></li>
+                                            @*@if (HttpContext.Current.Session["UserRole"] == null)
+
+        {
+            <li class="breadcrumb-item"><a href="/Account/Register">Register</a></li>
+            <li class="breadcrumb-item"><a href="/Account/RoleCreate">Create Role</a></li>
+            <li class="breadcrumb-item"><a href="/Account/RoleAddToUser">Add Role To A User</a></li>
+            @*<li class="breadcrumb-item"><a href="/Account/DisplayAllUserroles">Display Users And Roles</a></li>
+
+
+        }*@
+
+                                            @if (HttpContext.Current.Session["UserRole"] == null)
+                                            {
+                                                
+                                                <li class="breadcrumb-item"><a href="/Admin/Index">Manage Users And Roles</a></li>
+
+                                            }
+
+                                            <li class="breadcrumb-item"><a href="/Account/Logout">Sign Out</a></li>
+
                                             <li class="breadcrumb-item"><a href="/Account/Login">Login</a></li>
-                                            <li class="breadcrumb-item"><a href="/Account/RoleCreate">Create Role</a></li>
-                                            <li class="breadcrumb-item"><a href="/Account/RoleAddToUser">Add Role To A User</a></li>
+
+
+
 
 
                                             @*<li class="breadcrumb-item active">Advanced Tables</li>*@

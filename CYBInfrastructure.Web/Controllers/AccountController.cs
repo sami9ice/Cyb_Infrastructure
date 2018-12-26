@@ -13,12 +13,25 @@ using System.Net;
 using System.Web.Helpers;
 using System.Web.Security;
 using CYBInfrastructure.Web.Model;
+using System.Text.RegularExpressions;
+using CYBInfrastructure.Core.Interfaces;
+using System.Data.Entity.Infrastructure;
 
 namespace CYBInfrastructure.Web.Controllers
 {
     //[AllowAnonymous]
     public class AccountController : Controller
+
     {
+        public AccountController()
+        {
+
+        }
+        private readonly IUsersInRoleManager _usersInRole;
+        public AccountController(IUsersInRoleManager _usersInRole)
+        {
+            this._usersInRole = _usersInRole;
+        }
         CYBInfrastrctureContext db = new CYBInfrastrctureContext();
 
         // GET: Account
@@ -29,8 +42,9 @@ namespace CYBInfrastructure.Web.Controllers
                 return View(userAccount);
             }
         }
+        [Filter.AuthorizeUserRoles]
 
-        [Authorize(Roles = "RoleAdmin")]
+        //[Authorize(Roles = "RoleAdmin")]
         public ActionResult Register()
         {
             return View();
@@ -41,119 +55,304 @@ namespace CYBInfrastructure.Web.Controllers
         public ActionResult Register([Bind(Include = "UserID,StaffID,StaffName,LastName,Email,Password,ConfirmPassword,ResetPassword,")]
                             UserAccountModel user)
         {
-
-            bool Register = db.UserAccounts.Any(x => x.StaffID == user.StaffID && x.UserID == user.UserID);
-            if (Register == true)
+            using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
             {
-                ModelState.AddModelError("Username", "Username already exists, Try another one");
-            }
-            else
-            {
-                var dpt = new UserAccount
+                var checkexistance = (from reg in db.UserAccounts where reg.StaffID == user.StaffID select reg);
+                if (checkexistance.Count() > 0)
                 {
-                    UserID = user.UserID,
+                    ModelState.AddModelError("StaffID", "StaffID already exists, Try another one");
+                    return View();
+                }
 
-                    StaffID = user.StaffID,
-                    StaffName = user.StaffName,
-                    Email = user.Email,
-                    Password = user.Password,
-                    ConfirmPassword = user.ConfirmPassword,
-                    ResetPasswordCode = user.ResetPasswordCode,
-                    //ActivationCode = user.ActivationCode
+                var checkexistance1 = (from reg in db.UserAccounts where reg.Email == user.Email select reg);
+                if (checkexistance1.Count() > 0)
+                {
+                    ModelState.AddModelError("Email", "Email already exists, Try another one");
+                    return View();
+                }
 
-                };
+                if (!string.IsNullOrEmpty(user.Email))
+                {
+                    string emailRegex = @"^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$";
+                    Regex re = new Regex(emailRegex);
+                    if (!re.IsMatch(user.Email))
+                    {
+                        ModelState.AddModelError("Email", "Please Enter Correct Email Address");
+                        return View();
 
-                db.UserAccounts.Add(dpt);
-                db.SaveChanges();
-                TempData["Success"] = "Registered Successfully";
+                    }
 
-                return RedirectToAction("Login", "Account", new { area = "Profile" });
+                    else
+                    {
+                        var dpt = new UserAccount
+                        {
+                            UserID = user.UserID,
+
+                            StaffID = user.StaffID,
+                            StaffName = user.StaffName,
+                            Email = user.Email,
+                            Password = user.Password,
+                            ConfirmPassword = user.ConfirmPassword,
+                            ResetPasswordCode = user.ResetPasswordCode,
+                            //ActivationCode = user.ActivationCode
+
+                        };
+
+                        db.UserAccounts.Add(dpt);
+                        db.SaveChanges();
+                        TempData["Success"] = "Registered Successfully";
+
+                        return RedirectToAction("Index", "Admin", new { area = "Profile" });
+                    }
+
+
+                }
+
+                //bool Register = db.UserAccounts.Any(x => x.StaffID == user.StaffID && x.UserID == user.UserID);
+
+                //if (Register == true)
+                //{
+                //    ModelState.AddModelError("StaffID", "StaffID already exists, Try another one");
+                //    return View();
+                //}
+                //bool Register3 = db.UserAccounts.Any(x => x.Email == user.Email && x.UserID == user.UserID);
+
+                //if (Register3 == true)
+                //{
+                //    ModelState.AddModelError("Email", "Email already exists, Try another one");
+                //    return View();
+                //}
+
+                else
+                {
+                    var dpt = new UserAccount
+                    {
+                        UserID = user.UserID,
+
+                        StaffID = user.StaffID,
+                        StaffName = user.StaffName,
+                        Email = user.Email,
+                        Password = user.Password,
+                        ConfirmPassword = user.ConfirmPassword,
+                        ResetPasswordCode = user.ResetPasswordCode,
+                        //ActivationCode = user.ActivationCode
+
+                    };
+
+                    db.UserAccounts.Add(dpt);
+                    db.SaveChanges();
+                    TempData["Success"] = "Registered Successfully";
+
+                    return RedirectToAction("Login", "Account", new { area = "Profile" });
+                }
+
+
             }
+
+              
+           
+            
             return View(user);
 
         }
 
 
+        //public class CustomAuthorizeAttribute : AuthorizeAttribute
+        //{
+        //    protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
+        //    {
+        //        if (filterContext.HttpContext.User.Identity.IsAuthenticated)
+        //        {
+        //            filterContext.Result = new HttpStatusCodeResult(HttpStatusCode.Forbidden);
+        //        }
+        //        else
+        //        {
+        //            base.HandleUnauthorizedRequest(filterContext);
+        //        }
+        //    }
+        //}
 
 
 
+        [HttpGet]
         public ActionResult Login()
         {
-            return View();
+            if(Session["SuperAdmin,Admin,UserRole"] != null)
+            {
+                return RedirectToAction("Index", "Location");
+            }
+            else
+            {
+                return View();
+
+            }
         }
         [HttpPost]
-        public ActionResult Login(LoginModel model )
+        public ActionResult Login(LoginModel model, string returnUrl )
         {
+           
+
+            
+            
+                var usr = db.UsersInRole.Where(u => u.UserAccount.StaffID == model.StaffId && u.UserAccount.Password==model.Password).ToList();
+
+                //var usr = (from user in db.Set<UsersInRoles>()
+                //           where user.StaffID == model.StaffId
+                //           where user.Password == model.Password
+                //           select user).FirstOrDefault();
+
+                    if (usr != null)
+                    {
+                      foreach (var item in usr)
+                      {
+                        if (item.Role.RoleName == "SuperAdmin")
+                        {
+                           Session["SuperAdmin"] = true;
+                            return RedirectToAction("Index", "Location");
+                            
+                        }
+
+                        if (item.Role.RoleName == "Admin")
+                        {
+                           Session["Admin"] = true;
+
+                            return RedirectToAction("Index", "Location");
+                        }
+                        if (item.Role.RoleName == "UserRole")
+                        {
+                            Session["UserRole"] = true;
+
+                             return RedirectToAction("Index", "Location");
+                        }
+
+                        
+
+                      }
+
+                     
 
 
-            using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
-            {
 
-                var usr = (from user in db.Set<UserAccount>()
-                           where user.StaffID == model.StaffId
-                           where user.Password == model.Password
-                           select user).FirstOrDefault();
-
-                if (usr != null)
-                {
-
-                    Session["UserId"] = usr.UserID.ToString();
-                    Session["Staff"] = usr.StaffID.ToString();
-                    //if (Roles.Provider.(usr.StaffID, "UserRole"))
-                    //{
-                    //    return RedirectToAction("Index", "Location");
-                    //}
-                    //else
-                    //{
-                    //    return RedirectToAction("Index", "");
-                    //}
+                      //Session["UserID"] = usr.UserID.ToString();
+                       //Session["StaffID"] = usr.StaffID.ToString();
+                      //if (Roles.IsUserInRole(usr., "AdminRole") )
+                      //{
+                      //    return RedirectToAction("Index", "Location");
+                      //}
+                      //if (Roles.IsUserInRole(usr.StaffID, "UserRole"))
+                      //{
+                      //    return RedirectToAction("Index", "Location");
+                      //}
 
 
-                    return RedirectToAction("Index", "Location");
 
-                }
-                else
-                {
-                    ModelState.AddModelError("", "Username or Password is wrong.");
-                }
-            }
-            return View();
+
+
+                      //return RedirectToAction("Index", "Location");
+
+
+                    }
+
+
+                    if ( usr!= null)
+                    {
+
+                       var checkexistance = (from reg in db.UserAccounts where reg.Password == model.Password select reg);
+                       if (checkexistance.Count() == 0)
+                       {
+                        ModelState.AddModelError("Password", "Password is wrong");
+                        return View();
+                       }
+                        //else if (usr != null)
+                        //{
+                        //   ModelState.AddModelError("", "Not Assigned a Role Yet, Contact Your Admin.");
+
+                        //   return View();
+                        //}
+
+                    }
+                
+                
+                    ModelState.AddModelError("", "Not Assigned a Role Yet or Staff Id Does not exist, Contact Your Admin.");
+
+                    //return View();
+
+            
+
+             
+             
+
+            // ModelState.AddModelError("", "Username or Password is wrong.");
+
+            
+            return View(returnUrl);
 
         }
-       
+
+
+        //public ActionResult RedirectToDefault()
+        //{
+
+        //    String[] roles = Roles.GetRolesForUser();
+        //    if (roles.Contains("RoleAdmin"))
+        //    {
+        //        return RedirectToAction("Index", "Location");
+        //    }
+        //    else if (roles.Contains("UserRole"))
+        //    {
+        //        return RedirectToAction("Index", "Department");
+        //    }
+        //    else if (roles.Contains("PublicUser"))
+        //    {
+        //        return RedirectToAction("Index", "PublicUser");
+        //    }
+        //    else
+        //    {
+        //        return RedirectToAction("Index");
+        //    }
+        //}
+
         public ActionResult LoggedIn()
         {
-            if (Session["UserId"] != null)
+            if (Session["StaffID"] != null)
             {
                 return View();
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Login","Login");
             }
         }
+
+        public ActionResult Logout()
+        {
+            Session["SuperAdmin,UserRole,Admin"] = null;
+            return RedirectToAction("Login", "Account");
+        }
+
         [NonAction]
+
         public void SendVerificationLinkEmail(string Email, string activationCode, string emailFor = "VerifyAccount")
         {
             var verifyUrl = "/Account/" + emailFor + "/" + activationCode;
             var link = Request.Url.AbsoluteUri.Replace(Request.Url.PathAndQuery, verifyUrl);
-            var fromEmail = new MailAddress("sagwogie@gmail.com", "Agwogie Samuel");
+            var fromEmail = new MailAddress("no-reply@cyberspace.net.ng", "CYB Infrastructure");
             var toEmail = new MailAddress(Email);
-            var fromEmailPassword = "1234Qwer//";// Replace with actual passoword
+            var fromEmailPassword = "Billing123";// Replace with actual passoword
             string subject = "";
             string body = "";
             if (emailFor == "VerifyAccount")
             {
                 subject = "Your account is successfully created!";
 
-                body = "<br/>br/> we are excited to tell you that ypur Dotnet Awsome account is" +
-                    "Successfully creatde. please click on the link below to verify your account" +
+                body = "<br/>br/> we are excited to tell you that your Cyb Infrastructure account is" +
+                    "Successfully created. please click on the link below to verify your account" +
                     "<br/><br/><a href ='" + link + "'> " + link + "</a>";
             }
             else if (emailFor == "ResetPassword")
             {
                 subject = "Reset Password";
-                body = "Hi,<br/><br/> We got request for reset your account password. Please click on the below link to reset your password" +
+                body = "Hi,<br/><br/> We got request to reset your account password. Please click on the below link to reset your password" +
                     "<br/><br/><a href = " + link + "> Reset Password link</a>";
             }
             //System.Net.Mail.SmtpClient client = new System.Net.Mail.SmtpClient
@@ -167,9 +366,10 @@ namespace CYBInfrastructure.Web.Controllers
             //}
 
 
+
             var smtp = new SmtpClient
             {
-                Host = "smtp.gmail.com",
+                Host = "smtp.office365.com",
                 Port = 587,
                 EnableSsl = true,
                 DeliveryMethod = SmtpDeliveryMethod.Network,
@@ -200,7 +400,7 @@ namespace CYBInfrastructure.Web.Controllers
             //Generate Reset password link
             //send Email
             string message = "";
-            bool status = false;
+            //bool status = false;
 
 
             using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
@@ -280,12 +480,15 @@ namespace CYBInfrastructure.Web.Controllers
             return View(model);
         }
 
-        [Authorize(Roles ="RoleAdmin")]
+        //[Authorize(Roles ="RoleAdmin")]
         [HttpGet]
+        //[AuthorizeUserAccessLevel(UserRole = "SuperAdmin")]
+        [Filter.AuthorizeUserRoles]
 
         public ActionResult RoleCreate()
 
         {
+
 
             return View(new CYBInfracstructure.DataStructure.Entities.Role());
 
@@ -301,23 +504,30 @@ namespace CYBInfrastructure.Web.Controllers
             if (ModelState.IsValid)
 
             {
+                bool RoleCreate = db.Roles.Any(x => x.RoleName == role.RoleName && x.RoleId == role.RoleId);
 
-                if (Roles.RoleExists(role.RoleName))
-
+                if (RoleCreate == true)
                 {
-
-                    ModelState.AddModelError("Error", "Rolename already exists");
-
+                    ModelState.AddModelError("RoleName", "RoleName already exists, Try another one");
                     return View(role);
-
                 }
+
+                //if (Roles.RoleExists(role.RoleName))
+
+                //{
+
+                //    ModelState.AddModelError("Error", "Rolename already exists");
+
+                //    return View(role);
+
+                //}
 
                 else
 
                 {
                   
 
-                    Roles.CreateRole(role.RoleName);
+                    //Roles.CreateRole(role.RoleName);
                     db.Roles.Add(role);
                     db.SaveChanges();
                     TempData["Success"] = "Registered Successfully";
@@ -346,9 +556,10 @@ namespace CYBInfrastructure.Web.Controllers
 
         }
 
-        [Authorize(Roles = "RoleAdmin")]
+        //[Authorize(Roles = "RoleAdmin")]
 
         [HttpGet]
+        [Filter.AuthorizeUserRoles]
 
         public ActionResult DisplayAllRoles()
 
@@ -400,6 +611,7 @@ namespace CYBInfrastructure.Web.Controllers
         }
 
         [NonAction]
+        //[Filter.AuthorizeUserRoles]
 
         public List<SelectListItem> GetAll_Users()
 
@@ -432,6 +644,7 @@ namespace CYBInfrastructure.Web.Controllers
         //[Authorize(Roles = "RoleAdmin")]
 
         [HttpGet]
+        [Filter.AuthorizeUserRoles]
 
         public ActionResult RoleAddToUser()
 
@@ -482,6 +695,7 @@ namespace CYBInfrastructure.Web.Controllers
                 //if (objIAccountData.Get_CheckUserRoles(objvm.UserID) == true)
 
                 {
+                   
 
                     ViewBag.ResultMessage = "This user already has the role specified !";
 
@@ -490,6 +704,7 @@ namespace CYBInfrastructure.Web.Controllers
                 else
 
                 {
+
                     //int val = 0;
                     //var Username = GetUserName_BY_UserID(Int32.TryParse(objvm.UserID));
 
@@ -501,9 +716,25 @@ namespace CYBInfrastructure.Web.Controllers
                     Roles.AddUserToRole(result, objvm.RoleName);
 
 
-                    
 
 
+                    //if (objvm != null)
+                    //{
+                    //    var checkexistance = (from reg in db.UsersInRole where reg.UserID.ToString() == objvm.RoleName select reg);
+                    //    if (checkexistance.Count() > 0)
+                    //    {
+                    //        //ModelState.AddModelError("RoleName", "This user already has the role specified !");
+                    //        ViewBag.ResultMessage = "This User is already assigned to the role specified!";
+
+                    //    }
+
+
+                    //}
+                    //else
+                    //{
+                    //    ViewBag.ResultMessage = "Username has been added to the role successfully !";
+
+                    //}
 
 
                     //CYBInfracstructure.DataStructure.Entities.UsersInRoles.ReferenceEquals(Username, objvm.RoleName);
@@ -542,7 +773,7 @@ namespace CYBInfrastructure.Web.Controllers
 
                 var data = (from WR in context.UsersInRole
 
-                            join R in context.Roles on WR.RoleName equals R.RoleName
+                            join R in context.Roles on WR.RoleId equals R.RoleId
 
                             where WR.Role.RoleName == userID
 
@@ -552,7 +783,7 @@ namespace CYBInfrastructure.Web.Controllers
 
                             {
 
-                                WR.UserAccountId
+                                WR.UserID
 
                             }).Count();
 
@@ -626,7 +857,7 @@ namespace CYBInfrastructure.Web.Controllers
         //}
 
 
-        public string GetUserName_BY_UserID(string UserName)
+        public string  GetUserName_BY_UserID(string UserName)
 
         {
 
@@ -642,14 +873,18 @@ namespace CYBInfrastructure.Web.Controllers
 
                 return result;
 
+
+
                
 
 
             }
 
+
+
         }
 
-        [Authorize(Roles = "RoleAdmin")]
+        [Filter.AuthorizeUserRoles]
 
         [HttpGet]
 
@@ -677,19 +912,61 @@ namespace CYBInfrastructure.Web.Controllers
 
                 var Alldata = (from User in db.UserAccounts
 
-                               join WU in db.UsersInRole on User.UserID equals WU.UserAccountId
+                               join WU in db.UsersInRole on User.UserID equals WU.UserID
 
-                               join WR in db.Roles on WU.RoleName equals WR.RoleName
+                               join WR in db.Roles on WU.RoleId equals WR.RoleId
 
-                               select new AllroleandUser { UserName = User.StaffID, RoleName = WR.RoleName }).ToList();
+
+                               select new AllroleandUser { UserName = User.StaffID, RoleName = WR.RoleName , StaffName = User.StaffName }).ToList();
 
 
 
                 return Alldata;
 
+
+
             }
 
         }
+
+
+        //[HttpGet]
+        //public ActionResult Edit(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    CYBInfracstructure.DataStructure.Entities.UsersInRoles location = _usersInRole.SelectList(x => x.Id == id).FirstOrDefault();
+        //    if (location == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(location);
+        //}
+        // public ActionResult Edit(Model.UsersInRoles dvm)
+        //{
+        //    var dept = new CYBInfracstructure.DataStructure.Entities.UsersInRoles
+        //    {
+        //        Id = dvm.Id,
+        //        RoleId = dvm.RoleId,
+        //        UserID = dvm.UserId,
+        //        Role = dvm.Role,
+        //        UserAccount = dvm.UserAccount
+
+        //    };
+
+        //    if (TryUpdateModel(dept))
+        //    {
+        //        _usersInRole.Edit(dept);
+        //        _usersInRole.SaveChanges();
+        //        TempData["Success"] = "Edited Successfully!";           
+        //        return RedirectToAction("Index");
+        //    }
+        //    return View();
+        // }
+
+       
 
 
         //  [NonAction]
