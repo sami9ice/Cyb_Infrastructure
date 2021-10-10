@@ -36,7 +36,7 @@ namespace CYBInfrastructure.Web.Controllers
 
         // GET: Account
         public ActionResult Index(UserAccountListViewModel userAccount)
-   {
+        {
             using (CYBInfrastrctureContext db = new CYBInfrastrctureContext())
             {
                 return View(userAccount);
@@ -149,9 +149,9 @@ namespace CYBInfrastructure.Web.Controllers
 
             }
 
-              
-           
-            
+
+
+
             return View(user);
 
         }
@@ -177,7 +177,7 @@ namespace CYBInfrastructure.Web.Controllers
         [HttpGet]
         public ActionResult Login()
         {
-            if(Session["SuperAdmin,Admin,UserRole"] != null)
+            if (Session["SuperAdmin,Admin,UserRole"] != null)
             {
                 return RedirectToAction("Index", "Location");
             }
@@ -188,33 +188,25 @@ namespace CYBInfrastructure.Web.Controllers
             }
         }
         [HttpPost]
-        public ActionResult Login(LoginModel model, string returnUrl )
+        public ActionResult Login(LoginModel model, string returnUrl)
         {
-           
-
-            
-            
-                var usr = db.UsersInRole.Where(u => u.UserAccount.StaffID == model.StaffId && u.UserAccount.Password==model.Password).ToList();
-
-                //var usr = (from user in db.Set<UsersInRoles>()
-                //           where user.StaffID == model.StaffId
-                //           where user.Password == model.Password
-                //           select user).FirstOrDefault();
-
-                    if (usr != null)
+            try
+            {
+               var  usr = db.UsersInRole.Where(u => u.UserAccount.StaffID == model.StaffId && u.UserAccount.Password == model.Password).ToList();
+                if (usr != null)
+                {
+                    foreach (var item in usr)
                     {
-                      foreach (var item in usr)
-                      {
                         if (item.Role.RoleName == "SuperAdmin")
                         {
-                           Session["SuperAdmin"] = true;
+                            Session["SuperAdmin"] = true;
                             return RedirectToAction("Index", "Location");
-                            
+
                         }
 
                         if (item.Role.RoleName == "Admin")
                         {
-                           Session["Admin"] = true;
+                            Session["Admin"] = true;
 
                             return RedirectToAction("Index", "Location");
                         }
@@ -222,69 +214,87 @@ namespace CYBInfrastructure.Web.Controllers
                         {
                             Session["UserRole"] = true;
 
-                             return RedirectToAction("Index", "Location");
+                            return RedirectToAction("Index", "Location");
                         }
 
-                        
-
-                      }
-
-                     
-
-
-
-                      //Session["UserID"] = usr.UserID.ToString();
-                       //Session["StaffID"] = usr.StaffID.ToString();
-                      //if (Roles.IsUserInRole(usr., "AdminRole") )
-                      //{
-                      //    return RedirectToAction("Index", "Location");
-                      //}
-                      //if (Roles.IsUserInRole(usr.StaffID, "UserRole"))
-                      //{
-                      //    return RedirectToAction("Index", "Location");
-                      //}
-
-
-
-
-
-                      //return RedirectToAction("Index", "Location");
 
 
                     }
 
 
-                    if ( usr!= null)
-                    {
 
-                       var checkexistance = (from reg in db.UserAccounts where reg.Password == model.Password select reg);
-                       if (checkexistance.Count() == 0)
-                       {
+
+
+                    //Session["UserID"] = usr.UserID.ToString();
+                    //Session["StaffID"] = usr.StaffID.ToString();
+                    //if (Roles.IsUserInRole(usr., "AdminRole") )
+                    //{
+                    //    return RedirectToAction("Index", "Location");
+                    //}
+                    //if (Roles.IsUserInRole(usr.StaffID, "UserRole"))
+                    //{
+                    //    return RedirectToAction("Index", "Location");
+                    //}
+
+
+
+
+
+                    //return RedirectToAction("Index", "Location");
+
+
+                }
+
+
+                if (usr != null)
+                {
+
+                    var checkexistance = (from reg in db.UserAccounts where reg.Password == model.Password select reg);
+                    if (checkexistance.Count() == 0)
+                    {
                         ModelState.AddModelError("Password", "Password is wrong");
                         return View();
-                       }
-                        //else if (usr != null)
-                        //{
-                        //   ModelState.AddModelError("", "Not Assigned a Role Yet, Contact Your Admin.");
-
-                        //   return View();
-                        //}
-
                     }
-                
-                
-                    ModelState.AddModelError("", "Not Assigned a Role Yet or Staff Id Does not exist, Contact Your Admin.");
+                    //else if (usr != null)
+                    //{
+                    //   ModelState.AddModelError("", "Not Assigned a Role Yet, Contact Your Admin.");
 
-                    //return View();
+                    //   return View();
+                    //}
 
-            
+                }
 
-             
-             
+
+                ModelState.AddModelError("", "Not Assigned a Role Yet or Staff Id Does not exist, Contact Your Admin.");
+
+
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError("",ex.Message);
+
+                return View(returnUrl);
+
+            }
+
+            //var usr = db.UsersInRole.Where(u => u.UserAccount.StaffID == model.StaffId && u.UserAccount.Password == model.Password).ToList();
+
+            //var usr = (from user in db.Set<UsersInRoles>()
+            //           where user.StaffID == model.StaffId
+            //           where user.Password == model.Password
+            //           select user).FirstOrDefault();
+
+
+            //return View();
+
+
+
+
+
 
             // ModelState.AddModelError("", "Username or Password is wrong.");
 
-            
+
             return View(returnUrl);
 
         }
@@ -320,7 +330,7 @@ namespace CYBInfrastructure.Web.Controllers
             }
             else
             {
-                return RedirectToAction("Login","Login");
+                return RedirectToAction("Login", "Login");
             }
         }
 
@@ -525,7 +535,7 @@ namespace CYBInfrastructure.Web.Controllers
                 else
 
                 {
-                  
+
 
                     //Roles.CreateRole(role.RoleName);
                     db.Roles.Add(role);
@@ -695,7 +705,7 @@ namespace CYBInfrastructure.Web.Controllers
                 //if (objIAccountData.Get_CheckUserRoles(objvm.UserID) == true)
 
                 {
-                   
+
 
                     ViewBag.ResultMessage = "This user already has the role specified !";
 
@@ -710,8 +720,8 @@ namespace CYBInfrastructure.Web.Controllers
 
                     //int GetUserName_BY_UserID;
                     //string Username = objvm.UserID;
-                    
-                 //var Username  = Int32.TryParse(objvm.UserID, out GetUserName_BY_UserID) ;
+
+                    //var Username  = Int32.TryParse(objvm.UserID, out GetUserName_BY_UserID) ;
                     var result = GetUserName_BY_UserID(objvm.UserID);
                     Roles.AddUserToRole(result, objvm.RoleName);
 
@@ -857,7 +867,7 @@ namespace CYBInfrastructure.Web.Controllers
         //}
 
 
-        public string  GetUserName_BY_UserID(string UserName)
+        public string GetUserName_BY_UserID(string UserName)
 
         {
 
@@ -867,15 +877,15 @@ namespace CYBInfrastructure.Web.Controllers
 
                 var result = (from UP in context.UserAccounts
 
-                                where UP.StaffID == UserName
+                              where UP.StaffID == UserName
 
-                                select UP.StaffID).SingleOrDefault();
+                              select UP.StaffID).SingleOrDefault();
 
                 return result;
 
 
 
-               
+
 
 
             }
@@ -895,9 +905,9 @@ namespace CYBInfrastructure.Web.Controllers
 
             AllroleandUser objru = new AllroleandUser();
 
-          objru.AllDetailsUserlist = Get_StaffID_And_Rolename();
+            objru.AllDetailsUserlist = Get_StaffID_And_Rolename();
 
-           return View(objru);
+            return View(objru);
         }
 
         [NonAction]
@@ -917,7 +927,7 @@ namespace CYBInfrastructure.Web.Controllers
                                join WR in db.Roles on WU.RoleId equals WR.RoleId
 
 
-                               select new AllroleandUser { UserName = User.StaffID, RoleName = WR.RoleName , StaffName = User.StaffName }).ToList();
+                               select new AllroleandUser { UserName = User.StaffID, RoleName = WR.RoleName, StaffName = User.StaffName }).ToList();
 
 
 
@@ -966,7 +976,7 @@ namespace CYBInfrastructure.Web.Controllers
         //    return View();
         // }
 
-       
+
 
 
         //  [NonAction]
